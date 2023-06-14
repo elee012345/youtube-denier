@@ -5,25 +5,44 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 
+/*
+another way of doing things
+but it's really aids
+probably because idk webdev or js in genearl and i'm botching this code to make professional js devs cry
 
-// gives some weird crap that has the url but in a form that idk how to extract
-//
-// async function getCurrentTab() {
-//   let queryOptions = { active: true, lastFocusedWindow: true };
-//   // `tab` will either be a `tabs.Tab` instance or `undefined`.
-//   let [tab] = await chrome.tabs.query(queryOptions);
-//   return tab.url;
-// }
-// 
-//  chrome.tabs.onUpdated.addListener(function (tabId , info) {
-//    console.log('activated');
-//    console.log(getCurrentTab());
-//    if ( getCurrentTab() == "https://youtube.com" ) {
-//      console.log('youtube if triggered');
-//      chrome.tabs.create({url: "https://google.com"});
-//    }
-//    
-//  });
+
+async function getURL() {
+  let queryOptions = { active: true, lastFocusedWindow: true };
+  let [tab] = await chrome.tabs.query(queryOptions);
+  return tab.url;
+}
+
+async function getID() {
+  let queryOptions = { active: true, lastFocusedWindow: true };
+  let [tab] = await chrome.tabs.query(queryOptions);
+  return tab.id;
+}
+
+function youtubequestionmarkexclamationmark(url) {
+  console.log('activated');
+  console.log(url);
+  if ( url === "https://www.youtube.com/" ) {
+    console.log('youtube if triggered');
+    chrome.tabs.remove(getID().then(byebyeyoutube));
+  }
+}
+
+function byebyeyoutube(id) {
+  chrome.tabs.remove(id);
+}
+
+chrome.tabs.onUpdated.addListener(function (tabId , info) {
+  let promise = getURL();
+  promise.then(youtubequestionmarkexclamationmark);
+  
+  
+});
+*/
 
 
 chrome.tabs.onUpdated.addListener(async (tabId, info, tab) => {
